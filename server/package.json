@@ -1,0 +1,26 @@
+{
+  "name": "r3",
+  "version": "1.0.0",
+  "description": "RethinkDB based real time backend for a drawing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isurusiri/r3.git"
+  },
+  "keywords": [
+    "RethinkDB",
+    "NodeJS"
+  ],
+  "author": "Isuru Siriwardana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isurusiri/r3/issues"
+  },
+  "homepage": "https://github.com/isurusiri/r3#readme",
+  "dependencies": {
+    "socket.io": "^2.1.1"
+  }
+}
