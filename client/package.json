@@ -6,6 +6,7 @@
     "react-scripts": "1.1.4"
   },
   "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
