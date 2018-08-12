@@ -9,7 +9,7 @@ class App extends Component {
 
     subscribeToTimer((timestamp) => {
       this.setState(
-        timestamp
+        {timestamp}
       );
     });
   }
