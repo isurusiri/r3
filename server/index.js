@@ -25,19 +25,19 @@ function subscribeToDrawings({client, connection}) {
 r.connect({
     host: 'localhost',
     port: 28015,
-    db: 'awesome_whiteboard',
-}).then((connection) => {
+    db: 'awesome_whiteboard'
+  }).then((connection) => {
     io.on('connection', (client) => {
-        client.on('createDrawing', ({ name }) => {
-            createDrawing({connection, name})
-        });
-
-        client.on('subscribeToDrawings', () => subscribeToDrawings(
-            client,
-            connection
-        ));
+      client.on('createDrawing', ({ name }) => {
+        createDrawing({ connection, name });
+      });
+  
+      client.on('subscribeToDrawings', () => subscribeToDrawings({
+        client,
+        connection,
+      }));
     });
-});
+  });
 
 const port = 8000;
 io.listen(port);
