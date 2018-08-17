@@ -9,6 +9,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "rxjs": "^6.2.2",
+    "rxjs-compat": "^6.2.2",
     "rxsync": "^0.0.3",
     "simple-react-canvas": "^0.0.1",
     "socket.io-client": "^2.0.3"
