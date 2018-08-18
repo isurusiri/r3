@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 //import 'rxjs/add/observable/fromEventPattern';
 import 'rxjs/Rx';
 
-const socket = openSocket('http://localhost:8000');
+const port = parseInt(window.location.search.replace('?', ''), 10) || 8000;
+const socket = openSocket(`http://localhost:${port}`);
 
 function subscribeToDrawings(callback) {
     socket.on('drawing', callback);
@@ -32,9 +33,25 @@ function subscribeToDrawingLines(drawingId, callback) {
     socket.emit('subscribeToDrawingLines', drawingId);
 }
 
+function subscribeToConnectionEvent(callback) {
+    socket.on('connect', () => callback({
+        state: 'connected',
+        port,
+    }));
+    socket.on('disconnect', () => callback({
+        state: 'disconnected',
+        port,
+    }));
+    socket.on('connect_error', () => callback({
+        state: 'disconnected',
+        port
+    }));
+}
+
 export {
     createDrawing,
     subscribeToDrawings,
     publishLine,
     subscribeToDrawingLines,
+    subscribeToConnectionEvent,
 };
