@@ -22,16 +22,25 @@ function subscribeToDrawings({client, connection}) {
      });
 }
 
-function handleLinePublish({connection, line}) {
+function handleLinePublish({connection, line, callback}) {
   console.log('saving line to the db');
   r.table('lines')
   .insert(Object.assign(line, { timestamp: new Date() }))
   .run(connection)
+  .then(callback);
 }
 
-function subscribeToDrawingLines({client, connection, drawingId}) {
+function subscribeToDrawingLines({client, connection, drawingId, from}) {
+  let query = r.row('drawingId').eq(drawingId);
+
+  if(from) {
+    query = query.and(
+      r.row('timestamp').ge(new Date(from))
+    );
+  }
+
   return r.table('lines')
-          .filter(r.row('drawingId').eq(drawingId))
+          .filter(query)
           .changes({ include_initial: true })
           .run(connection)
           .then((cursor) => {
@@ -55,16 +64,18 @@ r.connect({
         connection,
       }));
 
-      client.on('publishLine', (line) => handleLinePublish({
+      client.on('publishLine', (line, callback) => handleLinePublish({
         connection,
         line,
+        callback,
       }));
 
-      client.on('subscribeToDrawingLines', (drawingId) => {
+      client.on('subscribeToDrawingLines', ({drawingId, from}) => {
         subscribeToDrawingLines({
           client,
           connection,
-          drawingId
+          drawingId,
+          from
         });
       });
     });
